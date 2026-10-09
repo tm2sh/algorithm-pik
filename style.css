@@ -1,0 +1,425 @@
+:root {
+  color-scheme: light;
+  --ink: #172347;
+  --sky: #34c9f3;
+  --sky-deep: #149bc7;
+  --cream: #fff9de;
+  --yellow: #ffd93d;
+  --red: #ff3b4f;
+  --red-dark: #c91e36;
+  --blue: #3158e8;
+  --green: #16a979;
+  --shadow: #172347;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  min-width: 280px;
+  min-height: 100svh;
+  margin: 0;
+  overflow: hidden;
+  color: var(--ink);
+  background: var(--sky);
+  font-family: "Arial Rounded MT Bold", "Trebuchet MS", system-ui, sans-serif;
+}
+
+button {
+  font: inherit;
+}
+
+.page-pattern {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 12% 18%, #fff 0 7px, transparent 8px),
+    radial-gradient(circle at 84% 15%, var(--yellow) 0 12px, transparent 13px),
+    radial-gradient(circle at 91% 77%, #fff 0 8px, transparent 9px),
+    radial-gradient(circle at 13% 84%, var(--red) 0 10px, transparent 11px),
+    radial-gradient(circle at 70% 92%, var(--yellow) 0 6px, transparent 7px);
+  opacity: 0.9;
+}
+
+.game {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  padding: 24px;
+}
+
+.game-card {
+  position: relative;
+  width: min(100%, 540px);
+  padding: clamp(30px, 7vw, 58px) clamp(22px, 7vw, 56px) 34px;
+  text-align: center;
+  background: var(--cream);
+  border: 5px solid var(--ink);
+  border-radius: 38px 38px 54px 54px;
+  box-shadow: 10px 12px 0 rgb(23 35 71 / 0.25);
+  animation: card-arrives 500ms cubic-bezier(0.2, 0.9, 0.35, 1.2) both;
+}
+
+.game-card::before,
+.game-card::after {
+  position: absolute;
+  top: 30px;
+  width: 18px;
+  height: 18px;
+  content: "";
+  background: var(--yellow);
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+}
+
+.game-card::before {
+  left: 28px;
+}
+
+.game-card::after {
+  right: 28px;
+  background: var(--sky);
+}
+
+.eyebrow {
+  display: inline-block;
+  margin: 0 0 10px;
+  padding: 7px 15px;
+  color: #fff;
+  font-size: clamp(0.9rem, 2.8vw, 1.05rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--blue);
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  transform: rotate(-2deg);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(3rem, 13vw, 6.25rem);
+  line-height: 0.84;
+  letter-spacing: -0.07em;
+}
+
+h1 span {
+  display: inline-block;
+  margin-top: 14px;
+  color: var(--red);
+  text-shadow: 3px 3px 0 var(--yellow);
+  transform: rotate(-3deg);
+}
+
+.sound-waves {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 34px;
+  gap: 7px;
+  margin: 22px 0 14px;
+}
+
+.sound-waves span {
+  width: 8px;
+  height: 14px;
+  background: var(--blue);
+  border-radius: 999px;
+}
+
+.sound-waves span:nth-child(2) {
+  height: 30px;
+  background: var(--red);
+}
+
+.push-button {
+  position: relative;
+  display: grid;
+  width: clamp(150px, 38vw, 190px);
+  aspect-ratio: 1;
+  margin: 0 auto;
+  padding: 0;
+  cursor: pointer;
+  color: #fff;
+  background: var(--red);
+  border: 6px solid var(--ink);
+  border-radius: 50%;
+  box-shadow: 0 13px 0 var(--red-dark), 0 18px 0 var(--ink);
+  place-items: center;
+  transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.push-button span {
+  font-size: clamp(1.55rem, 6vw, 2rem);
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 0 rgb(0 0 0 / 0.18);
+}
+
+.push-button:hover {
+  filter: brightness(1.07);
+  transform: translateY(-2px);
+}
+
+.push-button:active,
+.push-button.is-pressed {
+  box-shadow: 0 4px 0 var(--red-dark), 0 8px 0 var(--ink);
+  transform: translateY(10px) scale(0.98);
+}
+
+.push-button:focus-visible,
+.choice-button:focus-visible {
+  outline: 5px solid #fff;
+  outline-offset: 5px;
+  box-shadow: 0 0 0 9px var(--blue);
+}
+
+.hint {
+  margin: 34px 0 0;
+  font-size: clamp(1rem, 3vw, 1.15rem);
+  line-height: 1.4;
+}
+
+.modal,
+.result {
+  position: fixed;
+  z-index: 10;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+}
+
+.modal[hidden],
+.result[hidden] {
+  display: none;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(23 35 71 / 0.72);
+  backdrop-filter: blur(5px);
+  animation: fade-in 220ms ease both;
+}
+
+.modal-card {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 440px);
+  padding: 56px 28px 30px;
+  text-align: center;
+  background: #fff;
+  border: 5px solid var(--ink);
+  border-radius: 32px;
+  box-shadow: 10px 12px 0 rgb(0 0 0 / 0.24);
+  animation: pop-in 360ms cubic-bezier(0.2, 1.25, 0.3, 1) both;
+}
+
+.modal-badge {
+  position: absolute;
+  top: -44px;
+  left: 50%;
+  display: grid;
+  width: 82px;
+  height: 82px;
+  color: var(--ink);
+  font-size: 3rem;
+  background: var(--yellow);
+  border: 5px solid var(--ink);
+  border-radius: 50%;
+  box-shadow: 0 6px 0 rgb(23 35 71 / 0.18);
+  place-items: center;
+  transform: translateX(-50%) rotate(5deg);
+}
+
+.modal-card h2 {
+  margin: 0;
+  font-size: clamp(1.9rem, 8vw, 2.7rem);
+  line-height: 1.05;
+}
+
+.modal-card p {
+  margin: 12px 0 24px;
+  font-family: system-ui, sans-serif;
+  font-size: 1.05rem;
+}
+
+.choice-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.choice-button {
+  min-height: 64px;
+  padding: 12px 18px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 1.35rem;
+  border: 4px solid var(--ink);
+  border-radius: 18px;
+  box-shadow: 0 6px 0 var(--ink);
+  transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+}
+
+.choice-button:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+}
+
+.choice-button:active {
+  box-shadow: 0 2px 0 var(--ink);
+  transform: translateY(4px);
+}
+
+.choice-yes {
+  background: var(--green);
+}
+
+.choice-no {
+  background: var(--blue);
+}
+
+.result {
+  z-index: 20;
+  overflow: hidden;
+  background: var(--yellow);
+  animation: flash-in 180ms ease both;
+}
+
+.result p {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  color: var(--red);
+  font-size: clamp(6rem, 30vw, 14rem);
+  line-height: 1;
+  letter-spacing: -0.08em;
+  text-shadow: 7px 7px 0 var(--ink);
+  animation: result-pop 620ms cubic-bezier(0.15, 1.5, 0.35, 1) both;
+}
+
+.result-burst {
+  position: absolute;
+  width: min(76vw, 620px);
+  aspect-ratio: 1;
+  background: repeating-conic-gradient(
+    from 8deg,
+    #fff 0deg 11deg,
+    transparent 11deg 24deg
+  );
+  border-radius: 50%;
+  animation: burst-spin 1.8s linear infinite;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes card-arrives {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.94) rotate(-1deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.72) rotate(-4deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes flash-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes result-pop {
+  0% { transform: scale(0.2) rotate(-9deg); }
+  65% { transform: scale(1.14) rotate(3deg); }
+  100% { transform: scale(1) rotate(-2deg); }
+}
+
+@keyframes burst-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-height: 660px) {
+  .game-card {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  h1 {
+    font-size: clamp(2.8rem, 12vh, 4.8rem);
+  }
+
+  .sound-waves {
+    margin-block: 12px 8px;
+  }
+
+  .push-button {
+    width: min(27vh, 155px);
+  }
+
+  .hint {
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 380px) {
+  .game {
+    padding: 14px;
+  }
+
+  .game-card {
+    border-radius: 28px;
+    box-shadow: 7px 9px 0 rgb(23 35 71 / 0.25);
+  }
+
+  .choice-buttons {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
+

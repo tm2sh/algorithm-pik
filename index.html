@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Алгоритм Пик! — простая и весёлая детская игра со звуком."
+    />
+    <meta name="theme-color" content="#34c9f3" />
+    <title>Алгоритм Пик!</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23ff3b4f'/%3E%3Cpath d='M19 21v22M19 21h15c15 0 15 20 0 20H19' fill='none' stroke='%23fff' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="page-pattern" aria-hidden="true"></div>
+
+    <main class="game" aria-labelledby="game-title">
+      <section class="game-card" aria-label="Игра Алгоритм Пик">
+        <p class="eyebrow">Весёлая игра</p>
+        <h1 id="game-title">Алгоритм<br /><span>Пик!</span></h1>
+
+        <div class="sound-waves" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+
+        <button class="push-button" id="start-button" type="button">
+          <span>Нажми</span>
+        </button>
+
+        <p class="hint">Интересно, что произойдёт?</p>
+      </section>
+    </main>
+
+    <div class="modal" id="choice-modal" hidden>
+      <div class="modal-backdrop" aria-hidden="true"></div>
+      <section
+        class="modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+      >
+        <div class="modal-badge" aria-hidden="true">?</div>
+        <h2 id="modal-title">Пикнуть ещё раз?</h2>
+        <p id="modal-description">Выбирай смело!</p>
+        <div class="choice-buttons">
+          <button class="choice-button choice-yes" id="yes-button" type="button">
+            Да!
+          </button>
+          <button class="choice-button choice-no" id="no-button" type="button">
+            Нет
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <div class="result" id="result" role="status" aria-live="assertive" hidden>
+      <div class="result-burst" aria-hidden="true"></div>
+      <p>Пик!</p>
+    </div>
+
+    <p class="sr-only" id="audio-status" aria-live="polite"></p>
+  </body>
+</html>
+
